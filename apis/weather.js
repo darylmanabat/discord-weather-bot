@@ -11,7 +11,7 @@ module.exports = async (lat, lon, units = `metric`, futureForecastCountIn3hIncre
     });
 
     const currentForecast = response.data.list[futureForecastCountIn3hIncrements];
-    return {
+    const resultObject = {
       temperature: currentForecast.main.temp,
       minimumTemperature: currentForecast.main.temp_min,
       maximumTemperature: currentForecast.main.temp_max,
@@ -25,9 +25,14 @@ module.exports = async (lat, lon, units = `metric`, futureForecastCountIn3hIncre
         speed: currentForecast.wind.speed,
         direction: currentForecast.wind.deg,
       },
-      rainVolume: currentForecast.rain[`3h`],
-      snowVolume: currentForecast.snow[`3h`],
     };
+
+    if (resultObject.weather === `Rain`) {
+      resultObject.rainVolume = currentForecast.rain[`3h`];
+    } else if (resultObject.weather === `Snow`) {
+      resultObject.snowVolume = currentForecast.snow[`3h`];
+    }
+    return resultObject;
   } catch (error) {
     return null;
   }

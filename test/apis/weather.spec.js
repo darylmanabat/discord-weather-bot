@@ -239,6 +239,23 @@ describe(`Weather API`, () => {
     assert.strictEqual(weather, object.weather);
   });
 
+  it(`should not give rain volume for a given forecast if it is not raining`, async () => {
+    const weather = `Clear`;
+
+    returnedMockResult.list[0].weather[0].main = weather;
+
+    mock
+      .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
+        params: { lat, lon, appid: API_KEY, units: `metric` },
+      })
+      .reply(200, returnedMockResult);
+
+    const object = await weatherAPI(lat, lon);
+    const resultRainVolume = object.rainVolume;
+
+    assert.notExists(resultRainVolume);
+  });
+
   it(`should give snow volume for a given forecast if it is snowing`, async () => {
     const snowVolume = 0.52;
     const weather = `Snow`;
@@ -257,6 +274,23 @@ describe(`Weather API`, () => {
 
     assert.strictEqual(snowVolume, resultSnowVolume);
     assert.strictEqual(weather, object.weather);
+  });
+
+  it(`should not give snow volume for a given forecast if it is not snowing`, async () => {
+    const weather = `Clear`;
+
+    returnedMockResult.list[0].weather[0].main = weather;
+
+    mock
+      .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
+        params: { lat, lon, appid: API_KEY, units: `metric` },
+      })
+      .reply(200, returnedMockResult);
+
+    const object = await weatherAPI(lat, lon);
+    const resultSnowVolume = object.snowVolume;
+
+    assert.notExists(resultSnowVolume);
   });
 
   it(`should provide future forecasts if requested`, async () => {
