@@ -5,6 +5,8 @@ const { assert } = require(`chai`);
 const weatherAPI = require(`../../apis/weather`);
 const capitalizeFirstLetter = require(`../../utils/capitalizeFirstLetter`); // utility function
 
+const API_KEY = require(`../../config`).WEATHER_API_KEY;
+
 let mock; // declare variables for scoping
 let lat;
 let lon;
@@ -67,7 +69,7 @@ describe(`Weather API`, () => {
     returnedMockResult.list[0].main.temp = temperature; // modify our setup object for this test
     mock // defined behavior when axios is given this specific url and parameters
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -81,7 +83,7 @@ describe(`Weather API`, () => {
     returnedMockResult.list[0].main.feels_like = heatIndex;
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -96,7 +98,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -112,7 +114,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -130,7 +132,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -150,7 +152,7 @@ describe(`Weather API`, () => {
     returnedMockResult.list[0].main.temp = temperatureInFahrenheit;
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `imperial` },
+        params: { lat, lon, appid: API_KEY, units: `imperial` },
       })
       .reply(200, returnedMockResult);
 
@@ -171,7 +173,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -190,7 +192,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -207,7 +209,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -226,7 +228,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -246,7 +248,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -265,7 +267,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(200, returnedMockResult);
 
@@ -282,7 +284,7 @@ describe(`Weather API`, () => {
 
     mock
       .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
-        params: { lat, lon, appid: `YOUR_API_KEY`, units: `metric` },
+        params: { lat, lon, appid: API_KEY, units: `metric` },
       })
       .reply(500, returnedMockResult);
 

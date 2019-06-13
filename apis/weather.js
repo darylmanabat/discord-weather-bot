@@ -2,10 +2,12 @@ const axios = require(`axios`);
 
 const capitalizeFirstLetter = require(`../utils/capitalizeFirstLetter`);
 
+const API_KEY = require(`../config`).WEATHER_API_KEY; // API key from your config file
+
 module.exports = async (lat, lon, units = `metric`, futureForecastCountIn3hIncrements = 0) => {
   try {
     const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast`, {
-      params: { lat, lon, appid: `YOUR_API_KEY`, units },
+      params: { lat, lon, appid: API_KEY, units },
     });
 
     const currentForecast = response.data.list[futureForecastCountIn3hIncrements];
