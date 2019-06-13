@@ -1,0 +1,14 @@
+{
+  "name": "discord-weather-bot",
+  "version": "0.0.1",
+  "description": "A discord bot that uses Geocoding and Weather APIs to give weather information of an area",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daryl Manabat",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "discord.js": "^12.0.2"
+  }
+}
