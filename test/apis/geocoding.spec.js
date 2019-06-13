@@ -1,15 +1,31 @@
 const axios = require(`axios`);
-const MockAdapter = require(`axios-mock-adapter`);
+const MockAdapter = require(`axios-mock-adapter`); // for mocking axios
 const { assert } = require(`chai`);
 
 const geocodingAPI = require(`../../apis/geocoding`);
 
-const mock = new MockAdapter(axios);
+let mock; // declare variable for scoping
 
 describe(`Geocoding API`, () => {
+  before(() => {
+    mock = new MockAdapter(axios); // mock our axios for testing
+  });
+
+  beforeEach(() => {
+    mock.reset(); // cleanup any mock handlers before the next test
+  });
+
+  afterEach(() => {
+    mock.reset(); // cleanup any mock handlers before the next test
+  });
+
+  after(() => {
+    mock.restore(); // restore axios after this test block is done
+  });
+
   it(`should return an object with a name property that includes the query on positive match`, async () => {
     const query = `Prague`;
-    mock
+    mock // defined behavior when axios is given this specific url and parameters
       .onGet(`https://nominatim.openstreetmap.org/search`, { params: { q: query, format: `json` } })
       .reply(200, [{ display_name: `Prague, okres Hlavní město Praha, Hlavní město Praha, Prague, Czech Republic` }]);
 
