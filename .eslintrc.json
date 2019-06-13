@@ -1,0 +1,23 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true,
+    "browser": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier", "import", "jsx-a11y", "react", "mocha", "chai-expect", "chai-friendly"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "mocha/no-exclusive-tests": ["error"],
+    "quotes": ["error", "backtick"],
+    "no-underscore-dangle": 0,
+    "chai-expect/terminating-properties": 1,
+    "chai-expect/missing-assertion": 2,
+    "no-unused-expressions": 0,
+    "no-restricted-syntax": ["error", "WithStatement"],
+    "no-await-in-loop": 0,
+    "no-param-reassign": ["error", { "props": false }]
+  }
+}
