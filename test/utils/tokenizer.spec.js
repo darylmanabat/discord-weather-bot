@@ -3,7 +3,7 @@ const tokenizer = require(`../../utils/tokenizer`);
 
 describe(`The tokenizer utility function`, () => {
   it(`should detect and isolate the prefix command if it's on the start of the string`, () => {
-    const testString = `!weather some text here`;
+    const testString = `!weather some text here`; // sample input from a discord user
 
     const object = tokenizer(testString);
 
