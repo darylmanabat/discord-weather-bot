@@ -19,6 +19,16 @@ describe(`The tokenizer utility function`, () => {
     assert.notInclude(object.flags, object.command);
   });
 
+  it(`should return even without flags or arguments`, () => {
+    const stringWithoutFlags = `!weather some words`;
+    const stringWithoutArgs = `!weather --some --flags`;
+
+    const withoutFlags = tokenizer(stringWithoutFlags);
+    const withoutArgs = tokenizer(stringWithoutArgs);
+    assert.exists(withoutFlags);
+    assert.exists(withoutArgs);
+  });
+
   it(`should detect and isolate arguments, and provide them as an array`, () => {
     const testString = `!weather --some --flags more words`;
 
