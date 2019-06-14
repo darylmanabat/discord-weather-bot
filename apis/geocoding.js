@@ -6,7 +6,7 @@ module.exports = async (query) => {
       params: { q: query, format: `json` },
     });
 
-    if (response.data.length < 1) return null;
+    if (response.data.length < 1) return {};
     const result = response.data[0];
 
     return {
@@ -15,6 +15,6 @@ module.exports = async (query) => {
       lon: result.lon,
     };
   } catch (error) {
-    return undefined;
+    return null;
   }
 };

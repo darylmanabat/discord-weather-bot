@@ -51,19 +51,19 @@ describe(`Geocoding API`, () => {
     assert.strictEqual(longitude, lon);
   });
 
-  it(`should return null when no match is found`, async () => {
+  it(`should return an empty object when no match is found`, async () => {
     const query = `someunknownlocation`;
     mock.onGet(`https://nominatim.openstreetmap.org/search`, { params: { q: query, format: `json` } }).reply(200, []);
 
     const object = await geocodingAPI(query);
-    assert.strictEqual(object, null);
+    assert.deepEqual(object, {});
   });
 
-  it(`should return undefined when API endpoint has some non-200 status`, async () => {
+  it(`should return null when API endpoint has some non-200 status`, async () => {
     const query = `Prague`;
     mock.onGet(`https://nominatim.openstreetmap.org/search`, { params: { q: query, format: `json` } }).reply(500, []);
 
     const object = await geocodingAPI(query);
-    assert.strictEqual(object, undefined);
+    assert.strictEqual(object, null);
   });
 });
