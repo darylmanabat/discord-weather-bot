@@ -311,6 +311,42 @@ describe(`Weather API`, () => {
     assert.strictEqual(temperature, resultTemperature);
   });
 
+  it(`should provide the number of 3h increments for a future forecast`, async () => {
+    const futureTimeIn3hBlocks = 2;
+    const temperature = 7;
+
+    returnedMockResult.list[futureTimeIn3hBlocks].main.temp = temperature;
+
+    mock
+      .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
+        params: { lat, lon, appid: API_KEY, units: `metric` },
+      })
+      .reply(200, returnedMockResult);
+
+    const object = await weatherAPI(lat, lon, undefined, 2);
+    const resultNumberOf3hAhead = object.future;
+
+    assert.strictEqual(futureTimeIn3hBlocks, resultNumberOf3hAhead);
+  });
+
+  it(`should round down the number for 3h increments if given a decimal number`, async () => {
+    const futureTimeIn3hBlocks = 2.5;
+    const temperature = 7;
+
+    returnedMockResult.list[Math.floor(futureTimeIn3hBlocks)].main.temp = temperature;
+
+    mock
+      .onGet(`https://api.openweathermap.org/data/2.5/forecast`, {
+        params: { lat, lon, appid: API_KEY, units: `metric` },
+      })
+      .reply(200, returnedMockResult);
+
+    const object = await weatherAPI(lat, lon, undefined, 2);
+    const resultNumberOf3hAhead = object.future;
+
+    assert.strictEqual(Math.floor(futureTimeIn3hBlocks), resultNumberOf3hAhead);
+  });
+
   it(`should return null on API non-200 status`, async () => {
     const statusCode = 500;
 

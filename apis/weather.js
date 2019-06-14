@@ -9,8 +9,8 @@ module.exports = async (lat, lon, units = `metric`, futureForecastCountIn3hIncre
     const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast`, {
       params: { lat, lon, appid: API_KEY, units },
     });
-
-    const currentForecast = response.data.list[futureForecastCountIn3hIncrements];
+    const future = Math.floor(futureForecastCountIn3hIncrements);
+    const currentForecast = response.data.list[future];
     const resultObject = {
       temperature: currentForecast.main.temp,
       minimumTemperature: currentForecast.main.temp_min,
@@ -26,7 +26,9 @@ module.exports = async (lat, lon, units = `metric`, futureForecastCountIn3hIncre
         direction: currentForecast.wind.deg,
       },
     };
-
+    if (future >= 1) {
+      resultObject.future = future;
+    }
     if (resultObject.weather === `Rain`) {
       resultObject.rainVolume = currentForecast.rain[`3h`];
     } else if (resultObject.weather === `Snow`) {
