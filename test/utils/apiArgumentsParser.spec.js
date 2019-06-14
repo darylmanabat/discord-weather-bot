@@ -93,6 +93,19 @@ describe(`The apiArgumentsParser utility function`, () => {
     assert.notExists(negativeResult.future);
   });
 
+  it(`should return the future property with a value of -1 if the number on the flag array is not between 1 and 39 (inclusive)`, () => {
+    const tokenObject = {
+      command: `!weather`,
+      flags: [`--humidity`, `--metric`, `--40`],
+      arguments: [`forecast`, `London,`, `UK`],
+    };
+
+    const result = apiArgumentsParser(tokenObject.arguments, tokenObject.flags);
+
+    assert.notStrictEqual(tokenObject.flags[2].slice(2), result.future);
+    assert.strictEqual(-1, result.future);
+  });
+
   it(`should return an object with a displayIncluding property (type array) for the rest of the flags`, () => {
     const tokenObject = {
       command: `!weather`,
