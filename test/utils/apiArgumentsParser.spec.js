@@ -5,7 +5,7 @@ describe(`The apiArgumentsParser utility function`, () => {
   it(`should return an object with a task property`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`],
+      flags: [`--humidity`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
@@ -17,7 +17,7 @@ describe(`The apiArgumentsParser utility function`, () => {
   it(`should return the first item in the arguments array as the task property`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`],
+      flags: [`--humidity`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
@@ -29,13 +29,13 @@ describe(`The apiArgumentsParser utility function`, () => {
   it(`should return an object with a location property only if task is "forecast", equal to the concatenated string of the rest of the arguments`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`],
+      flags: [`--humidity`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
     const tokenWithoutForecast = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`],
+      flags: [`--humidity`],
       arguments: [`where`, `London,`, `UK`],
     };
 
@@ -75,13 +75,13 @@ describe(`The apiArgumentsParser utility function`, () => {
   it(`should return an object with "future" property (type number) only if the flags array contains a number`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`, `--3`],
+      flags: [`--humidity`, `--3`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
     const tokenWithoutNumber = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`],
+      flags: [`--humidity`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
@@ -89,33 +89,33 @@ describe(`The apiArgumentsParser utility function`, () => {
     const negativeResult = apiArgumentsParser(tokenWithoutNumber.arguments, tokenWithoutNumber.flags);
 
     assert.exists(positiveResult.future);
-    assert.strictEqual(tokenObject.flags[2].slice(2), positiveResult.future);
+    assert.strictEqual(tokenObject.flags[1].slice(2), positiveResult.future);
     assert.notExists(negativeResult.future);
   });
 
   it(`should return the future property with a value of -1 if the number on the flag array is not between 1 and 39 (inclusive)`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`, `--40`],
+      flags: [`--humidity`, `--40`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
     const result = apiArgumentsParser(tokenObject.arguments, tokenObject.flags);
 
-    assert.notStrictEqual(tokenObject.flags[2].slice(2), result.future);
+    assert.notStrictEqual(tokenObject.flags[1].slice(2), result.future);
     assert.strictEqual(-1, result.future);
   });
 
   it(`should return an object with a displayIncluding property (type array) for the rest of the flags`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`, `--3`],
+      flags: [`--humidity`, `--clouds`, `--3`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
     const result = apiArgumentsParser(tokenObject.arguments, tokenObject.flags);
 
     assert.exists(result.displayIncluding);
-    assert.deepEqual([tokenObject.flags[0]], result.displayIncluding);
+    assert.deepEqual([tokenObject.flags[0], tokenObject.flags[1]], result.displayIncluding);
   });
 });

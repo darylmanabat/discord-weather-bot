@@ -14,7 +14,9 @@ module.exports = (args, flags) => {
   } else {
     resultObject.units = `metric`;
     const index = flagsCopy.indexOf(`--metric`);
-    flagsCopy.splice(index, 1);
+    if (index >= 0) {
+      flagsCopy.splice(index, 1);
+    }
   }
   if (
     flagsCopy.some((element) => {
