@@ -46,24 +46,30 @@ describe(`The apiArgumentsParser utility function`, () => {
     assert.notExists(negativeResult.location);
   });
 
-  it(`should return an object with a "units" property only if task is "forecast" and the flags array contain either "--metric" or "--imperial", returns a string of either "metric" or "imperial`, () => {
+  it(`should return an object with a "units" property only if task is "forecast" and the flags array contain "--imperial", and returns the string "imperial"`, () => {
     const tokenObject = {
       command: `!weather`,
-      flags: [`--humidity`, `--metric`],
+      flags: [`--humidity`, `--imperial`],
       arguments: [`forecast`, `London,`, `UK`],
     };
 
+    const result = apiArgumentsParser(tokenObject.arguments, tokenObject.flags);
+
+    assert.exists(result.units);
+    assert.strictEqual(tokenObject.flags[1].slice(2), result.units);
+  });
+
+  it(`should return an object with a "units" property only if task is "forecast", and should return the string "metric" by default`, () => {
     const tokenWithoutUnits = {
       command: `!weather`,
       flags: [`--humidity`],
       arguments: [`forecast`, `London,`, `UK`],
     };
-    const positiveResult = apiArgumentsParser(tokenObject.arguments, tokenObject.flags);
-    const negativeResult = apiArgumentsParser(tokenWithoutUnits.arguments, tokenWithoutUnits.flags);
 
-    assert.exists(positiveResult.units);
-    assert.strictEqual(tokenObject.flags[1].slice(2), positiveResult.units);
-    assert.notExists(negativeResult.units);
+    const result = apiArgumentsParser(tokenWithoutUnits.arguments, tokenWithoutUnits.flags);
+
+    assert.exists(result.units);
+    assert.strictEqual(`metric`, result.units);
   });
 
   it(`should return an object with "future" property (type number) only if the flags array contains a number`, () => {

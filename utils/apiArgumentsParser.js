@@ -11,7 +11,7 @@ module.exports = (args, flags) => {
     resultObject.units = `imperial`;
     const index = flagsCopy.indexOf(`--imperial`);
     flagsCopy.splice(index, 1); // remove this flag from the array
-  } else if (flagsCopy.includes(`--metric`)) {
+  } else {
     resultObject.units = `metric`;
     const index = flagsCopy.indexOf(`--metric`);
     flagsCopy.splice(index, 1);
