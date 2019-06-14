@@ -1,5 +1,10 @@
 node_modules/
 
+# scratchpad file for javascript testing
+
+scratch.js
+
 # Miscellaneous
 
 goorm.manifest
+.VSCodeCounter/
