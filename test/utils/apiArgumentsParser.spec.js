@@ -89,7 +89,7 @@ describe(`The apiArgumentsParser utility function`, () => {
     const negativeResult = apiArgumentsParser(tokenWithoutNumber.arguments, tokenWithoutNumber.flags);
 
     assert.exists(positiveResult.future);
-    assert.strictEqual(tokenObject.flags[1].slice(2), positiveResult.future);
+    assert.strictEqual(Number(tokenObject.flags[1].slice(2)), positiveResult.future);
     assert.notExists(negativeResult.future);
   });
 

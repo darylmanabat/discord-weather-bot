@@ -30,7 +30,7 @@ module.exports = (args, flags) => {
     });
     const index = flagsCopy.indexOf(match);
     flagsCopy.splice(index, 1);
-    if (match.slice(2) > 0 && match.slice(2) < 40) resultObject.future = match.slice(2);
+    if (match.slice(2) > 0 && match.slice(2) < 40) resultObject.future = Number(match.slice(2));
     else resultObject.future = -1;
   }
 
