@@ -22,11 +22,14 @@ You can provide optional flags to change the output:
 
   const errorMessage = `Sorry, my sources are down. Can you try again later?`;
 
+  const futureForecastNumberOutOfBoundsMessage = `Sorry, the number you provided for a future forecast was out of bounds. please provide a number flag between 1 and 39 (inclusive)`;
+
   if (task === `forecast` && location === ``) return noLocationMessage;
   if (task === `forecast` && (location === null || weather === null)) return errorMessage;
   if (task === `forecast` && Object.keys(location).length === 0) return locationNotFoundMessage;
   if (task === `help`) return helpMessage;
   if (task === `no task`) return introductionMessage;
+  if (task === `future forecast out of bounds`) return futureForecastNumberOutOfBoundsMessage;
   if (task === `forecast` && location.length > 1) {
     let forecastMessage = `The weather in ${location} is `;
     if (units === `metric`) {

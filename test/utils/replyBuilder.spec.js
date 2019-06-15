@@ -135,7 +135,7 @@ You can provide optional flags to change the output:
     assert.strictEqual(expectedString, string);
   });
 
-  it(`should reply with a suggestion to use the help command if the first argument is neither "help" nor "forecast"`, () => {
+  it(`should reply with a suggestion to use the help command if the first argument is not "forecast", "help", "no task", or "future forecast out of bounds"`, () => {
     const firstArgument = `word`;
 
     const string = replyBuilder(firstArgument);
@@ -167,5 +167,15 @@ You can provide optional flags to change the output:
 
     assert.strictEqual(expectedString, firstResult);
     assert.strictEqual(expectedString, secondResult);
+  });
+
+  it(`should reply with a custom error message if "future forecast out of bounds" is passed as the first argument`, () => {
+    const firstArgument = `future forecast out of bounds`;
+
+    const result = replyBuilder(firstArgument);
+
+    const expectedString = `Sorry, the number you provided for a future forecast was out of bounds. please provide a number flag between 1 and 39 (inclusive)`;
+
+    assert.strictEqual(expectedString, result);
   });
 });
