@@ -68,9 +68,17 @@ You can provide optional flags to change the output:
 
     const units = `metric`;
 
-    const string = replyBuilder(firstArgument, location, weatherObject, units);
+    const timezone = `Europe/Stockholm`;
 
-    const expectedString = `The weather in Stockholm is ${weatherObject.weatherDescription} with a temperature of ${weatherObject.temperature} degrees Celsius, and feels like ${weatherObject.heatIndex} degrees Celsius. This forecast is intended from now until PLACEHOLDER.`;
+    const string = replyBuilder(firstArgument, location, weatherObject, units, timezone);
+
+    const expectedString = `The weather in Stockholm is ${weatherObject.weatherDescription} with a temperature of ${
+      weatherObject.temperature
+    } degrees Celsius, and feels like ${
+      weatherObject.heatIndex
+    } degrees Celsius. This forecast is intended from now until ${new Date(
+      weatherObject.timeOfForecast,
+    ).toLocaleString(`en-US`, { timezone })} (Local time).`;
     assert.strictEqual(expectedString, string);
   });
 
@@ -81,11 +89,21 @@ You can provide optional flags to change the output:
 
     const units = `metric`;
 
+    const timezone = `Europe/Stockholm`;
+
     weatherObject.future = 2;
 
-    const string = replyBuilder(firstArgument, location, weatherObject, units);
+    const string = replyBuilder(firstArgument, location, weatherObject, units, timezone);
 
-    const expectedString = `The weather in Stockholm is ${weatherObject.weatherDescription} with a temperature of ${weatherObject.temperature} degrees Celsius, and feels like ${weatherObject.heatIndex} degrees Celsius. This forecast is intended from PLACEHOLDER until PLACEHOLDER.`;
+    const expectedString = `The weather in Stockholm is ${weatherObject.weatherDescription} with a temperature of ${
+      weatherObject.temperature
+    } degrees Celsius, and feels like ${
+      weatherObject.heatIndex
+    } degrees Celsius. This forecast is intended from ${new Date(
+      weatherObject.timeOfForecast - 1000 * 60 * 60 * 3,
+    ).toLocaleString(`en-US`, { timezone })} until ${new Date(weatherObject.timeOfForecast).toLocaleString(`en-US`, {
+      timezone,
+    })} (Local time).`;
 
     assert.strictEqual(expectedString, string);
   });
@@ -99,9 +117,20 @@ You can provide optional flags to change the output:
 
     const displayIncluding = [`--cloud`, `--wind`];
 
-    const string = replyBuilder(firstArgument, location, weatherObject, units, displayIncluding);
+    const timezone = `Europe/Stockholm`;
 
-    const expectedString = `The weather in Stockholm is ${weatherObject.weatherDescription} with a temperature of ${weatherObject.temperature} degrees Celsius, and feels like ${weatherObject.heatIndex} degrees Celsius. The sky's cloudiness is ${weatherObject.cloudiness} percent. The wind speed is ${weatherObject.wind.speed} m/s NE. This forecast is intended from now until PLACEHOLDER.`;
+    const string = replyBuilder(firstArgument, location, weatherObject, units, timezone, displayIncluding);
+
+    const expectedString = `The weather in Stockholm is ${weatherObject.weatherDescription} with a temperature of ${
+      weatherObject.temperature
+    } degrees Celsius, and feels like ${weatherObject.heatIndex} degrees Celsius. The sky's cloudiness is ${
+      weatherObject.cloudiness
+    } percent. The wind speed is ${
+      weatherObject.wind.speed
+    } m/s NE. This forecast is intended from now until ${new Date(weatherObject.timeOfForecast).toLocaleString(
+      `en-US`,
+      { timezone },
+    )} (Local time).`;
 
     assert.strictEqual(expectedString, string);
   });

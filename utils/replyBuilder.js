@@ -1,6 +1,6 @@
 const windDegreesConverter = require(`./windDegreesConverter`);
 
-module.exports = (task = null, location, weather, units, displayOptions = []) => {
+module.exports = (task = null, location, weather, units, timezone, displayOptions = []) => {
   const helpMessage = `To use, provide "!weather forecast (location)" (without the parentheses).
 You can provide optional flags to change the output:
 --imperial for imperial units on temperature and wind speed,
@@ -61,9 +61,15 @@ You can provide optional flags to change the output:
       forecastMessage += ` The snow volume is expected to be ${weather.snowVolume}mm.`;
     }
     if (weather.future >= 1) {
-      forecastMessage += `This forecast is intended from PLACEHOLDER until PLACEHOLDER .`;
+      forecastMessage += ` This forecast is intended from ${new Date(
+        weather.timeOfForecast - 1000 * 60 * 60 * 3,
+      ).toLocaleString(`en-US`, { timezone })} until ${new Date(weather.timeOfForecast).toLocaleString(`en-US`, {
+        timezone,
+      })} (Local time).`;
     } else {
-      forecastMessage += ` This forecast is intended from now until PLACEHOLDER.`;
+      forecastMessage += ` This forecast is intended from now until ${new Date(
+        weather.timeOfForecast,
+      ).toLocaleString(`en-US`, { timezone })} (Local time).`;
     }
     return forecastMessage;
   }
