@@ -1,6 +1,6 @@
 const windDegreesConverter = require(`./windDegreesConverter`);
 
-module.exports = (task = null, location, weather, units, timezone, displayOptions = []) => {
+module.exports = (task, location, weather, units, timezone, displayOptions = []) => {
   const helpMessage = `To use, provide "!weather forecast (location)" (without the parentheses).
 You can provide optional flags to change the output:
 --imperial for imperial units on temperature and wind speed,
@@ -25,6 +25,8 @@ You can provide optional flags to change the output:
   if (task === `forecast` && location === ``) return noLocationMessage;
   if (task === `forecast` && (location === null || weather === null)) return errorMessage;
   if (task === `forecast` && Object.keys(location).length === 0) return locationNotFoundMessage;
+  if (task === `help`) return helpMessage;
+  if (task === `no task`) return introductionMessage;
   if (task === `forecast` && location.length > 1) {
     let forecastMessage = `The weather in ${location} is `;
     if (units === `metric`) {
@@ -73,8 +75,6 @@ You can provide optional flags to change the output:
     }
     return forecastMessage;
   }
-  if (task === `help`) return helpMessage;
-  if (task === null) return introductionMessage;
 
   return correctionMessage;
 };

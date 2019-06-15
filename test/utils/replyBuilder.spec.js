@@ -23,8 +23,8 @@ describe(`the replyBuilder utility function`, () => {
     };
   });
 
-  it(`should reply with an introduction if called with no arguments`, () => {
-    const string = replyBuilder();
+  it(`should reply with an introduction if called with "no task" as the first argument`, () => {
+    const string = replyBuilder(`no task`);
 
     const expectedString = `Hello! As my name implies, I'm a bot that delivers weather information. Type "!weather help" to see what I can do for you.`;
 
