@@ -59,10 +59,10 @@ You can provide optional flags to change the output:
         weather.wind.direction,
       )}.`;
     }
-    if (weather.weather === `Rain` && weather.rainVolume) {
+    if (weather.weather === `Rain` && weather.rainVolume && displayOptions.includes(`--rain`)) {
       forecastMessage += ` The rain volume is expected to be ${weather.rainVolume}mm.`;
     }
-    if (weather.weather === `Snow` && weather.snowVolume) {
+    if (weather.weather === `Snow` && weather.snowVolume && displayOptions.includes(`--snow`)) {
       forecastMessage += ` The snow volume is expected to be ${weather.snowVolume}mm.`;
     }
     if (weather.future >= 1) {
